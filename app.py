@@ -59,6 +59,7 @@ def search_url(search_keywords,website=None):
         comment_box = request_products_html.find_all('div',{'class':'_16PBlm'}) # find all returns list
         logging.debug(comment_box[0].div.div.div.div.text)
         logging.debug(comment_box[0].div.div.find_all('div',{'class':''})[0].div.text)
+
         count = 0
         for j in comment_box:
             logging.debug("Inside comment_box")
@@ -67,10 +68,14 @@ def search_url(search_keywords,website=None):
                 logging.debug(j.div.div.div.find_all('p',{'class':'_2-N8zT'})[0].text) # comment header
                 logging.debug(j.div.div.find_all('div',{'class':''})[0].div.text)
                 logging.debug(j.find('div',{'class':'_1LmwT9'}).span.text)
+                logging.debug(j.find('p',{'class':'_2sc7ZR _2V5EHH'}).text) # customer name
                 logging.debug("\n")
 
                 index = count
                 temp_dict = dict()
+
+                name = "name" #+ str(count)
+                temp_dict[name]= j.find('p',{'class':'_2sc7ZR _2V5EHH'}).text
 
                 customer_rating = "customer_rating" #+ str(count)
                 temp_dict[customer_rating]= j.div.div.div.div.text
@@ -89,7 +94,6 @@ def search_url(search_keywords,website=None):
 
                 dislikes = "dislikes" #+ str(count)
                 temp_dict[dislikes]= j.find('div',{'class':'_1LmwT9 pkR4jH'}).span.text
-
 
                 comments_data[index] = temp_dict
 
